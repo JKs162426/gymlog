@@ -230,3 +230,4 @@ To provide gym-goers with an intuitive and efficient tool to track their workout
 ---
 
 This specification provides a clear roadmap for building the GymLog application. Let me know if you need further details or adjustments!
+
