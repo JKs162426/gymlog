@@ -1,6 +1,8 @@
 import { connectDB } from "@/lib/mongodb";
 import { Workout } from "@/lib/models";
 
+export const dynamic = "force-dynamic";
+
 export default async function WorkoutPage() {
   await connectDB();
   const workouts = await Workout.find().sort({ date: -1 });
@@ -18,3 +20,4 @@ export default async function WorkoutPage() {
     </div>
   );
 }
+
