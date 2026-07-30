@@ -27,3 +27,10 @@
 - API routes in `app/api/`
 - Use `connectDB()` before every Mongoose query
 - Passwords hashed with bcryptjs before storing
+
+## Design & Branding
+
+- Color palette: zinc-900 (primary), red-500 (accent), white/zinc-400 (text)
+- Typography: Geist (Next.js default)
+- Layout: px-4 py-6 padding, rounded-xl shadow-md cards, md:grid-cols-2 grids
+- Spacing conventions: gap-4 between elements, mb-6 between sections
