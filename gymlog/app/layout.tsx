@@ -14,8 +14,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GymLog",
-  description: "A simple workout tracking application for focused training.",
+  title: {
+    default: "GymLog",
+    template: "%s | GymLog",
+  },
+  description:
+    "Track focused workout sessions, exercise volume, and recent training progress with GymLog.",
+  openGraph: {
+    title: "GymLog",
+    description:
+      "A simple workout tracking application for focused training and progress review.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

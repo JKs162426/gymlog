@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { connectDB } from "@/lib/mongodb";
 import { Workout } from "@/lib/models";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Workouts",
+  description: "Browse your GymLog workout history in reverse chronological order.",
+};
 
 export default async function WorkoutPage() {
   await connectDB();
@@ -20,4 +26,3 @@ export default async function WorkoutPage() {
     </div>
   );
 }
-
