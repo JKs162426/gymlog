@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import { connectDB } from "@/lib/mongodb";
 import { Workout } from "@/lib/models";
+
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description:
+    "Review your latest GymLog workout sessions and recent training activity.",
+};
 
 export default async function DashboardPage() {
   await connectDB();
