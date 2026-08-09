@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import AppHeader from "@/components/AppHeader";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -34,13 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full bg-slate-50 text-slate-950">
         <AppHeader />
         <div className="flex min-h-[calc(100vh-89px)] flex-col">{children}</div>
+        <footer className="border-t border-slate-200 bg-white">
+          <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+            <p>GymLog — focused workout tracking.</p>
+            <p>Built by Jesus Figueroa and Henry Chizoba.</p>
+          </div>
+        </footer>
       </body>
     </html>
   );
