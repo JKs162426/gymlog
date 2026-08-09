@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const ExerciseSchema = new Schema({
   name: { type: String, required: true },
@@ -21,8 +21,9 @@ export const Workout = models.Workout || model("Workout", WorkoutSchema);
 
 const UserSchema = new Schema(
   {
+    name: { type: String, trim: true, default: "" },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
   },
   { timestamps: true }
 );

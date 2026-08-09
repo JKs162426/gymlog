@@ -1,233 +1,98 @@
-Team members working on this project: Jesus Figueroa
+# GymLog
 
-Project's name: GymLog
+GymLog is a private, focused workout tracker for gym-goers who want to record useful training data without the complexity of a full fitness platform. Authenticated users can create sessions, add one or more exercises, review recent activity, edit complete workouts, and delete sessions they no longer need.
 
-Description: GymLog is a personal workout tracking application designed for gym-goers who want a simple and focused way to record their training sessions. Users can log their routines, track exercises with sets and reps, and monitor their progress over time without the complexity of bloated fitness apps.
+## Team
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+- Jesus Figueroa — [JKs162426](https://github.com/JKs162426)
+- Henry Chizoba — [hengage](https://github.com/hengage)
 
-## Getting Started
+## Public references
 
-First, run the development server:
+- Repository: [github.com/JKs162426/gymlog](https://github.com/JKs162426/gymlog)
+- Production application: add the public Vercel URL after the final deployment
+
+The repository is public. The production deployment must also be public and must have `MONGODB_URI`, `NEXTAUTH_SECRET`, and `NEXTAUTH_URL` configured before grading.
+
+## Product demo summary
+
+GymLog solves a common problem for lifters: recording enough information to make the next workout useful without navigating a crowded fitness product. It is intended for beginners and experienced gym-goers who want a fast, private history of dates, exercises, sets, repetitions, weights, and session notes.
+
+The most important flow begins with account creation or login. After signing in, the athlete records a workout with one or more exercises. The dashboard immediately summarizes recent sessions, exercise count, and working sets, while the history view makes every workout discoverable. Opening a workout provides the complete exercise breakdown and intentional edit and delete paths. Every read and mutation is scoped to the authenticated user, so one account cannot access another account's workout records.
+
+The profile view provides the second data-model workflow: users can read and update their name/email or permanently delete their profile and associated workouts. Clear empty, loading, validation, not-found, and failure states keep the primary flows understandable on desktop and mobile.
+
+## Technology and architecture
+
+- Next.js 16 App Router and React 19
+- TypeScript in strict mode
+- Tailwind CSS 4 with shared palette, type, spacing, and component patterns
+- MongoDB with Mongoose models for `User` and `Workout`
+- NextAuth.js v4 credentials authentication with JWT sessions
+
+Server Components query private data for dashboard, history, detail, edit, delete, and profile routes. Client Components are limited to interactive forms and buttons. The workout form demonstrates the required client → Route Handler → MongoDB cycle through `/api/workouts`.
+
+## Local setup
+
+1. Install Node.js 20 or newer and clone the repository.
+2. Change into the application directory: `cd gymlog`.
+3. Install the locked dependencies: `npm ci`.
+4. Copy `.env.example` to `.env.local` and replace every placeholder.
+5. Create a MongoDB database user with access to the GymLog database.
+6. Start the app with `npm run dev` and open [http://localhost:3000](http://localhost:3000).
+
+Generate a suitable authentication secret with `openssl rand -base64 32`. Never commit `.env.local` or real credentials.
+
+## Deployment
+
+1. Import `https://github.com/JKs162426/gymlog` into Vercel.
+2. Set the Root Directory to `gymlog`.
+3. Add `MONGODB_URI`, `NEXTAUTH_SECRET`, and `NEXTAUTH_URL` in the Vercel project settings.
+4. Allow the deployment environment to connect in MongoDB Atlas Network Access.
+5. Deploy the final merged `main` branch and verify register, login, workout CRUD, profile update, account deletion, and logout in an incognito window.
+
+## API routes
+
+| Method | Route | Authentication | Database operation |
+| --- | --- | --- | --- |
+| `POST` | `/api/auth/register` | Public | Create a user with a bcrypt password hash |
+| `GET` | `/api/workouts` | Required | Read the current user's workouts |
+| `POST` | `/api/workouts` | Required | Create a workout for the current user |
+| `GET` | `/api/workouts/:id` | Required | Read one owned workout |
+| `PUT` | `/api/workouts/:id` | Required | Validate and update one owned workout |
+| `DELETE` | `/api/workouts/:id` | Required | Delete one owned workout |
+| `GET` | `/api/profile` | Required | Read the current user's profile |
+| `PUT` | `/api/profile` | Required | Update name and email |
+| `DELETE` | `/api/profile` | Required | Delete the user and associated workouts |
+
+Unauthorized requests return `401`; missing or non-owned resources return `404`; invalid input returns `400` or `409`.
+
+## Grader access
+
+This project uses **NextAuth.js v4 credentials authentication**. A grader may create a fresh account through `/register`; no invitation or external identity provider is required. If the Canvas submission supplies a shared demo account, use those credentials only on the public production URL.
+
+Suggested verification flow:
+
+1. Register and confirm automatic sign-in.
+2. Add a workout containing at least two exercises.
+3. Verify dashboard and workout-history data.
+4. Open the workout, edit an exercise, and confirm the update.
+5. Update the profile name, log out, and log back in.
+6. Delete the workout. Account deletion can be tested last because it is permanent.
+
+## Quality checks
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run lint
+npx tsc --noEmit
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Before submission, run Lighthouse in a mobile incognito window for Performance, Accessibility, Best Practices, and SEO. Record those four scores in Canvas and use Chrome CSS Overview to confirm no WCAG color-contrast errors.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Known issues and opportunities
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-# GymLog Project Constitution
-
-## Project Overview
-
-GymLog is a personal workout tracking application designed for gym-goers who want a simple and focused way to record their training sessions. The application allows users to log their routines, track exercises with sets and reps, and monitor their progress over time without the complexity of bloated fitness apps.
-
----
-
-## Governing Principles
-
-### 1. Simplicity and Focus
-
-- The application must prioritize simplicity and usability, ensuring that users can log workouts quickly and efficiently.
-- Avoid unnecessary features that detract from the core purpose of workout tracking.
-
-### 2. Consistency and Maintainability
-
-- Code must adhere to strict TypeScript standards, including:
-  - Enabling `strict` mode.
-  - Avoiding the use of `any` type.
-- Follow Tailwind CSS conventions:
-  - Use utility-first classes for styling.
-  - Avoid custom CSS unless absolutely necessary.
-- Implement Next.js best practices:
-  - Use server components for data-fetching logic and client components for interactive UI.
-  - Adhere to file-based routing conventions.
-
-### 3. Testing and Quality Assurance
-
-- All features must include unit tests and integration tests.
-- Use testing libraries such as Jest and React Testing Library.
-- Ensure 100% test coverage for critical components and business logic.
-
-### 4. Collaboration and Communication
-
-- Use clear and descriptive naming conventions for files, variables, and functions.
-- Follow a consistent Git workflow:
-  - Use feature branches for development.
-  - Write meaningful commit messages.
-- Conduct regular code reviews to ensure adherence to project standards.
-- Document all major decisions and changes in the project wiki.
-
----
-
-## Development Stack
-
-- **Framework**: Next.js (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Testing**: Jest, React Testing Library
-
----
-
-## Team Guidelines
-
-- Maintain open communication through team collaboration tools (e.g., Slack, Notion).
-- Respect deadlines and communicate blockers early.
-- Encourage knowledge sharing and pair programming to improve team skills.
-
----
-
-## Template Tokens
-
-The following tokens must be replaced with project-specific values:
-
-- `[PROJECT_NAME]`: GymLog
-- `[PRINCIPLE_1_NAME]`: Simplicity and Focus
-- `[PRINCIPLE_2_NAME]`: Consistency and Maintainability
-- `[PRINCIPLE_3_NAME]`: Testing and Quality Assurance
-- `[PRINCIPLE_4_NAME]`: Collaboration and Communication
-
-# Project Specification: GymLog
-
-## Project Title
-
-GymLog: A Simple Workout Tracking Application
-
----
-
-## Project Description
-
-GymLog is a personal workout tracking application designed for gym-goers who want a simple and focused way to record their training sessions. The application allows users to log their routines, track exercises with sets and reps, and monitor their progress over time without the complexity of bloated fitness apps.
-
----
-
-## Purpose and Target Audience
-
-### Purpose
-
-To provide gym-goers with an intuitive and efficient tool to track their workouts, enabling them to focus on their fitness goals without distractions.
-
-### Target Audience
-
-- Fitness enthusiasts who prefer simplicity over feature-heavy fitness apps.
-- Beginners who want an easy way to start tracking their workouts.
-- Experienced gym-goers who need a fast and reliable workout logging tool.
-
----
-
-## User Stories and Acceptance Criteria
-
-### 1. User Registration and Login
-
-**User Story**: As a user, I want to sign up and log in securely so that I can access my workout data.  
-**Acceptance Criteria**:
-
-- Users can sign up with an email and password.
-- Passwords must be hashed and stored securely.
-- Users can log in with valid credentials.
-- Invalid login attempts show an error message.
-
----
-
-### 2. Create a Workout Log
-
-**User Story**: As a user, I want to create a workout log so that I can track my exercises for a session.  
-**Acceptance Criteria**:
-
-- Users can add a workout session with a date and optional notes.
-- Users can add exercises to the session, including exercise name, sets, reps, and weight.
-- The system validates required fields (e.g., exercise name, sets, reps).
-
----
-
-### 3. View Workout Logs
-
-**User Story**: As a user, I want to view my past workout logs so that I can monitor my progress.  
-**Acceptance Criteria**:
-
-- Users can view a list of past workout sessions.
-- Users can click on a session to see detailed exercises.
-- Logs are displayed in reverse chronological order.
-
----
-
-### 4. Update a Workout Log
-
-**User Story**: As a user, I want to update my workout logs so that I can correct or add information.  
-**Acceptance Criteria**:
-
-- Users can edit workout session details (e.g., date, notes).
-- Users can update exercises (e.g., change sets, reps, or weight).
-- Changes are saved and reflected immediately.
-
----
-
-### 5. Delete a Workout Log
-
-**User Story**: As a user, I want to delete a workout log so that I can remove incorrect or unnecessary data.  
-**Acceptance Criteria**:
-
-- Users can delete a workout session.
-- Users are prompted to confirm deletion.
-- Deleted logs are removed from the database.
-
----
-
-## API Endpoints
-
-### 1. User Authentication
-
-- **POST /api/auth/register**: Register a new user.
-- **POST /api/auth/login**: Authenticate a user and return a token.
-
-### 2. Workout Logs
-
-- **POST /api/workouts**: Create a new workout log.
-- **GET /api/workouts**: Retrieve all workout logs for the user.
-- **GET /api/workouts/:id**: Retrieve a specific workout log.
-- **PUT /api/workouts/:id**: Update a specific workout log.
-- **DELETE /api/workouts/:id**: Delete a specific workout log.
-
----
-
-## Implementation Priority
-
-1. **User Authentication**: Implement secure user registration and login.
-2. **Workout Log CRUD Operations**:
-   - Create workout logs.
-   - View workout logs.
-   - Update workout logs.
-   - Delete workout logs.
-3. **UI/UX Design**: Build a clean and intuitive interface using Next.js and Tailwind CSS.
-4. **Testing**: Write unit and integration tests for all core features.
-5. **Deployment**: Deploy the application to a production environment.
-
----
-
-This specification provides a clear roadmap for building the GymLog application. Let me know if you need further details or adjustments!
-
+- The current dashboard summarizes the five most recent workouts rather than long-term trends.
+- Password reset and email verification are future production-hardening opportunities.
+- Automated unit/integration coverage and a dedicated CI workflow remain opportunities.
+- The final production URL and Lighthouse scores must be added to the Canvas submission after deployment.
