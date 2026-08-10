@@ -46,7 +46,7 @@ Generate a suitable authentication secret with `openssl rand -base64 32`. Never 
 ## Deployment
 
 1. Import `https://github.com/JKs162426/gymlog` into Vercel.
-2. Set the Root Directory to `gymlog`.
+2. Keep the Root Directory at the repository root (`./`).
 3. Add `MONGODB_URI`, `NEXTAUTH_SECRET`, and `NEXTAUTH_URL` in the Vercel project settings.
 4. Allow the deployment environment to connect in MongoDB Atlas Network Access.
 5. Deploy the final merged `main` branch and verify register, login, workout CRUD, profile update, account deletion, and logout in an incognito window.
@@ -95,4 +95,4 @@ Before submission, run Lighthouse in a mobile incognito window for Performance, 
 - The current dashboard summarizes the five most recent workouts rather than long-term trends.
 - Password reset and email verification are future production-hardening opportunities.
 - Automated unit/integration coverage and a dedicated CI workflow remain opportunities.
-- The final production URL and Lighthouse scores must be added to the Canvas submission after deployment.
+- Lighthouse results should be captured again whenever the final deployed revision changes.
