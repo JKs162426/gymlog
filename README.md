@@ -10,7 +10,7 @@ GymLog is a private, focused workout tracker for gym-goers who want to record us
 ## Public references
 
 - Repository: [github.com/JKs162426/gymlog](https://github.com/JKs162426/gymlog)
-- Production application: add the public Vercel URL after the final deployment
+- Production application: https://gymlog-beige.vercel.app/
 
 The repository is public. The production deployment must also be public and must have `MONGODB_URI`, `NEXTAUTH_SECRET`, and `NEXTAUTH_URL` configured before grading.
 
@@ -53,17 +53,17 @@ Generate a suitable authentication secret with `openssl rand -base64 32`. Never 
 
 ## API routes
 
-| Method | Route | Authentication | Database operation |
-| --- | --- | --- | --- |
-| `POST` | `/api/auth/register` | Public | Create a user with a bcrypt password hash |
-| `GET` | `/api/workouts` | Required | Read the current user's workouts |
-| `POST` | `/api/workouts` | Required | Create a workout for the current user |
-| `GET` | `/api/workouts/:id` | Required | Read one owned workout |
-| `PUT` | `/api/workouts/:id` | Required | Validate and update one owned workout |
-| `DELETE` | `/api/workouts/:id` | Required | Delete one owned workout |
-| `GET` | `/api/profile` | Required | Read the current user's profile |
-| `PUT` | `/api/profile` | Required | Update name and email |
-| `DELETE` | `/api/profile` | Required | Delete the user and associated workouts |
+| Method   | Route                | Authentication | Database operation                        |
+| -------- | -------------------- | -------------- | ----------------------------------------- |
+| `POST`   | `/api/auth/register` | Public         | Create a user with a bcrypt password hash |
+| `GET`    | `/api/workouts`      | Required       | Read the current user's workouts          |
+| `POST`   | `/api/workouts`      | Required       | Create a workout for the current user     |
+| `GET`    | `/api/workouts/:id`  | Required       | Read one owned workout                    |
+| `PUT`    | `/api/workouts/:id`  | Required       | Validate and update one owned workout     |
+| `DELETE` | `/api/workouts/:id`  | Required       | Delete one owned workout                  |
+| `GET`    | `/api/profile`       | Required       | Read the current user's profile           |
+| `PUT`    | `/api/profile`       | Required       | Update name and email                     |
+| `DELETE` | `/api/profile`       | Required       | Delete the user and associated workouts   |
 
 Unauthorized requests return `401`; missing or non-owned resources return `404`; invalid input returns `400` or `409`.
 
