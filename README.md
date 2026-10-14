@@ -2,17 +2,16 @@
 
 GymLog is a private, focused workout tracker for gym-goers who want to record useful training data without the complexity of a full fitness platform. Authenticated users can create sessions, add one or more exercises, review recent activity, edit complete workouts, and delete sessions they no longer need.
 
+**Live:** <https://gymlog-beige.vercel.app>
+
+[![GymLog — landing page](docs/screenshot.jpg)](https://gymlog-beige.vercel.app)
+
 ## Team
+
+Built as a two-person team project for WDD 430 (Full-Stack Development) at BYU-Idaho.
 
 - Jesus Figueroa — [JKs162426](https://github.com/JKs162426)
 - Henry Chizoba — [hengage](https://github.com/hengage)
-
-## Public references
-
-- Repository: [github.com/JKs162426/gymlog](https://github.com/JKs162426/gymlog)
-- Production application: https://gymlog-beige.vercel.app/
-
-The repository is public. The production deployment must also be public and must have `MONGODB_URI`, `NEXTAUTH_SECRET`, and `NEXTAUTH_URL` configured before grading.
 
 ## Product demo summary
 
@@ -35,11 +34,10 @@ Server Components query private data for dashboard, history, detail, edit, delet
 ## Local setup
 
 1. Install Node.js 20 or newer and clone the repository.
-2. Change into the application directory: `cd gymlog`.
-3. Install the locked dependencies: `npm ci`.
-4. Copy `.env.example` to `.env.local` and replace every placeholder.
-5. Create a MongoDB database user with access to the GymLog database.
-6. Start the app with `npm run dev` and open [http://localhost:3000](http://localhost:3000).
+2. Install the locked dependencies: `npm ci`.
+3. Copy `.env.example` to `.env.local` and replace every placeholder.
+4. Create a MongoDB database user with access to the GymLog database.
+5. Start the app with `npm run dev` and open [http://localhost:3000](http://localhost:3000).
 
 Generate a suitable authentication secret with `openssl rand -base64 32`. Never commit `.env.local` or real credentials.
 
@@ -67,11 +65,11 @@ Generate a suitable authentication secret with `openssl rand -base64 32`. Never 
 
 Unauthorized requests return `401`; missing or non-owned resources return `404`; invalid input returns `400` or `409`.
 
-## Grader access
+## Try it
 
-This project uses **NextAuth.js v4 credentials authentication**. A grader may create a fresh account through `/register`; no invitation or external identity provider is required. If the Canvas submission supplies a shared demo account, use those credentials only on the public production URL.
+Create a free account at [/register](https://gymlog-beige.vercel.app/register) — no invitation or external identity provider is required.
 
-Suggested verification flow:
+Suggested walkthrough:
 
 1. Register and confirm automatic sign-in.
 2. Add a workout containing at least two exercises.
@@ -88,11 +86,8 @@ npx tsc --noEmit
 npm run build
 ```
 
-Before submission, run Lighthouse in a mobile incognito window for Performance, Accessibility, Best Practices, and SEO. Record those four scores in Canvas and use Chrome CSS Overview to confirm no WCAG color-contrast errors.
-
 ## Known issues and opportunities
 
 - The current dashboard summarizes the five most recent workouts rather than long-term trends.
 - Password reset and email verification are future production-hardening opportunities.
 - Automated unit/integration coverage and a dedicated CI workflow remain opportunities.
-- Lighthouse results should be captured again whenever the final deployed revision changes.
